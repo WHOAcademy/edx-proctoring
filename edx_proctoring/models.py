@@ -412,6 +412,10 @@ class ProctoredExamStudentAttempt(TimeStampedModel):
     # has not yet marked submitted is resumable.
     is_resumable = models.BooleanField(default=False, verbose_name=ugettext_noop("Is Resumable"))
 
+    ready_to_resume = models.BooleanField(default=False, verbose_name=ugettext_noop("Ready to Resume"))
+
+    resumed = models.BooleanField(default=False, verbose_name=ugettext_noop("Resumed"))
+
     history = HistoricalRecords(table_name='proctoring_proctoredexamstudentattempt_history')
 
     class Meta:
