@@ -9,6 +9,8 @@ from edx_proctoring import callbacks, instructor_dashboard_exam_urls, views
 
 app_name = u'edx_proctoring'
 
+CONTENT_ID_PATTERN = r'(?P<content_id>(?:i4x://?[^/]+/[^/]+/[^/]+/[^@]+(?:@[^/]+)?)|(?:[^/]+))'
+
 urlpatterns = [
     url(
         r'edx_proctoring/v1/proctored_exam/exam$',
@@ -21,9 +23,10 @@ urlpatterns = [
         name='proctored_exam.exam_by_id'
     ),
     url(
-        r'edx_proctoring/v1/proctored_exam/exam/course_id/{}/content_id/(?P<content_id>[A-z0-9]+)$'.format(
-            settings.COURSE_ID_PATTERN),
-        views.ProctoredExamView.as_view(),
+        r'edx_proctoring/v1/proctored_exam/exam/course_id/{course_id}/content_id/{content_id}$'.format(
+            course_id=settings.COURSE_ID_PATTERN,
+            content_id=CONTENT_ID_PATTERN,
+        ),
         name='proctored_exam.exam_by_content_id'
     ),
     url(
@@ -50,6 +53,11 @@ urlpatterns = [
     ),
     url(
         r'edx_proctoring/v1/proctored_exam/attempt$',
+        views.StudentProctoredExamAttemptCollection.as_view(),
+        name='proctored_exam.attempt.collection'
+    ),
+    url(
+        r'edx_proctoring/v1/proctored_exam/attempt/exam/(?P<exam_id>\d+)$',
         views.StudentProctoredExamAttemptCollection.as_view(),
         name='proctored_exam.attempt.collection'
     ),
