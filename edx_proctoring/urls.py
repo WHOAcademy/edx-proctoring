@@ -27,6 +27,7 @@ urlpatterns = [
             course_id=settings.COURSE_ID_PATTERN,
             content_id=CONTENT_ID_PATTERN,
         ),
+        views.ProctoredExamView.as_view(),
         name='proctored_exam.exam_by_content_id'
     ),
     url(
