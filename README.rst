@@ -147,3 +147,9 @@ refer to this `list of resources`_ if you need any assistance.
 
 .. _list of resources: https://open.edx.org/getting-help
 .. _Including Proctored Exams In Your Course: https://edx.readthedocs.io/projects/edx-partner-course-staff/en/latest/proctored_exams/index.html
+
+Custom Updates
+--------------
+* `Get assessment status from edx-proctoring`_
+
+.. _`Get assessment status from edx-proctoring`: https://github.com/WHOAcademy/lxp-docs/blob/master/docs/edx-proctoring.md
