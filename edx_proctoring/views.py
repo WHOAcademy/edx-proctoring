@@ -504,7 +504,7 @@ class StudentProctoredExamAttemptCollection(ProctoredAPIView):
         HTTP GET Handler. Returns the status of the exam attempt.
         """
 
-        exams = get_active_exams_for_user(request.user.id)
+        exams = get_active_exams_for_user(request.user.id, exam_id=exam_id)
 
         if exams:
             exam_info = exams[0]
