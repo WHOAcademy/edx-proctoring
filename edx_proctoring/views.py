@@ -36,7 +36,7 @@ from edx_proctoring.api import (
     get_allowances_for_course,
     get_backend_provider,
     get_enrollments_can_take_proctored_exams,
-    get_exam_attempt,
+    get_current_exam_attempt,
     get_exam_attempt_by_external_id,
     get_exam_attempt_by_id,
     get_exam_by_content_id,
@@ -965,7 +965,7 @@ class StudentProctoredExamAttemptCollection(ProctoredAPIView):
             }
 
             if exam_id:
-                attempt = get_exam_attempt(exam_id, request.user.id)
+                attempt = get_current_exam_attempt(exam_id, request.user.id)
                 response_dict['status'] = attempt['status'] if attempt else "not_started"
 
         return Response(data=response_dict, status=status.HTTP_200_OK)
