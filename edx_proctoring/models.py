@@ -331,7 +331,7 @@ class ProctoredExamStudentAttemptManager(models.Manager):
             is_sample_attempt=False,
         ).order_by('-completed_at')
 
-    def get_active_student_attempts(self, user_id, course_id=None):
+    def get_active_student_attempts(self, user_id, course_id=None, exam_id=None):
         """
         Returns the active student exams (user in-progress exams)
         """
@@ -339,6 +339,9 @@ class ProctoredExamStudentAttemptManager(models.Manager):
                                                Q(status=ProctoredExamStudentAttemptStatus.ready_to_submit))
         if course_id is not None:
             filtered_query = filtered_query & Q(proctored_exam__course_id=course_id)
+
+        if exam_id is not None:
+            filtered_query = filtered_query & Q(proctored_exam__id=exam_id)
 
         return self.filter(filtered_query).order_by('-created')  # pylint: disable=no-member
 

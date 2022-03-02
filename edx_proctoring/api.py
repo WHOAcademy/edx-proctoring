@@ -1586,7 +1586,7 @@ def get_last_exam_completion_date(course_id, username):
     return exam_attempts[0].completed_at if exam_attempts and are_all_exams_attempted else None
 
 
-def get_active_exams_for_user(user_id, course_id=None):
+def get_active_exams_for_user(user_id, course_id=None, exam_id=None):
     """
     This method will return a list of active exams for the user,
     i.e. started_at != None and completed_at == None. Theoretically there
@@ -1607,7 +1607,7 @@ def get_active_exams_for_user(user_id, course_id=None):
     """
     result = []
 
-    student_active_exams = ProctoredExamStudentAttempt.objects.get_active_student_attempts(user_id, course_id)
+    student_active_exams = ProctoredExamStudentAttempt.objects.get_active_student_attempts(user_id, course_id, exam_id)
     for active_exam in student_active_exams:
         # convert the django orm objects
         # into the serialized form.
