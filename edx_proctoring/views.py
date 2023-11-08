@@ -1405,12 +1405,12 @@ class StudentProctoredExamAttemptCollection(ProctoredAPIView):
         return the status of the exam attempt
     """
 
-    def get(self, request):  # pylint: disable=unused-argument
+    def get(self, request, exam_id=None):  # pylint: disable=unused-argument
         """
         HTTP GET Handler. Returns the status of the exam attempt.
         """
 
-        exams = get_active_exams_for_user(request.user.id)
+        exams = get_active_exams_for_user(request.user.id, exam_id=exam_id)
 
         if exams:
             exam_info = exams[0]
@@ -1424,6 +1424,10 @@ class StudentProctoredExamAttemptCollection(ProctoredAPIView):
                 'in_timed_exam': False,
                 'is_proctored': False
             }
+
+            if exam_id:
+                attempt = get_current_exam_attempt(exam_id, request.user.id)
+                response_dict['attempt_status'] = attempt['status'] if attempt else "not_started"
 
         return Response(data=response_dict, status=status.HTTP_200_OK)
 

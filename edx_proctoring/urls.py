@@ -9,7 +9,7 @@ from edx_proctoring import callbacks, instructor_dashboard_exam_urls, views
 
 app_name = 'edx_proctoring'
 
-CONTENT_ID_PATTERN = r'(?P<content_id>([A-z0-9]+|(?:i4x://?[^/]+/[^/]+/[^/]+/[^@]+(?:@[^/]+)?)|(?:[^/]+)))'
+CONTENT_ID_PATTERN = r'(?P<content_id>(?:i4x://?[^/]+/[^/]+/[^/]+/[^@]+(?:@[^/]+)?)|(?:[^/]+))'
 
 urlpatterns = [
     path('edx_proctoring/v1/proctored_exam/exam', views.ProctoredExamView.as_view(),
@@ -18,12 +18,11 @@ urlpatterns = [
     path('edx_proctoring/v1/proctored_exam/exam/exam_id/<int:exam_id>', views.ProctoredExamView.as_view(),
          name='proctored_exam.exam_by_id'
          ),
-    re_path(
-        (fr'edx_proctoring/v1/proctored_exam/exam/course_id/{settings.COURSE_ID_PATTERN}'
-         '/content_id/(?P<content_id>[A-z0-9]+)$'),
-        views.ProctoredExamView.as_view(),
-        name='proctored_exam.exam_by_content_id'
-    ),
+    path('edx_proctoring/v1/proctored_exam/exam/course_id/{settings.COURSE_ID_PATTERN}'
+         '/content_id/{CONTENT_ID_PATTERN}$',
+         views.ProctoredExamView.as_view(),
+         name='proctored_exam.exam_by_content_id'
+         ),
     re_path(
         fr'edx_proctoring/v1/proctored_exam/exam/course_id/{settings.COURSE_ID_PATTERN}$',
         views.ProctoredExamView.as_view(),
