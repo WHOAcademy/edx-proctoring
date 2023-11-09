@@ -18,8 +18,8 @@ urlpatterns = [
     path('edx_proctoring/v1/proctored_exam/exam/exam_id/<int:exam_id>', views.ProctoredExamView.as_view(),
          name='proctored_exam.exam_by_id'
          ),
-    path('edx_proctoring/v1/proctored_exam/exam/course_id/{settings.COURSE_ID_PATTERN}'
-         '/content_id/{CONTENT_ID_PATTERN}$',
+    re_path(fr'edx_proctoring/v1/proctored_exam/exam/course_id/{settings.COURSE_ID_PATTERN}'
+         fr'/content_id/{CONTENT_ID_PATTERN}$',
          views.ProctoredExamView.as_view(),
          name='proctored_exam.exam_by_content_id'
          ),
@@ -51,6 +51,11 @@ urlpatterns = [
          views.StudentProctoredExamAttemptCollection.as_view(),
          name='proctored_exam.attempt.collection'
          ),
+    re_path(
+        r'edx_proctoring/v1/proctored_exam/attempt/exam/(?P<exam_id>\d+)$',
+        views.StudentProctoredExamAttemptCollection.as_view(),
+        name='proctored_exam.attempt.collection'
+    ),
     path('edx_proctoring/v1/proctored_exam/attempt/<int:attempt_id>/review_status',
          views.ProctoredExamAttemptReviewStatus.as_view(),
          name='proctored_exam.attempt.review_status'
