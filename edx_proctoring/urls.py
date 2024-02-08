@@ -9,7 +9,7 @@ from edx_proctoring import callbacks, instructor_dashboard_exam_urls, views
 
 app_name = 'edx_proctoring'
 
-CONTENT_ID_PATTERN = r'(?P<content_id>([A-z0-9]+|(?:i4x://?[^/]+/[^/]+/[^/]+/[^@]+(?:@[^/]+)?)|(?:[^/]+)))'
+CONTENT_ID_PATTERN = r'(?P<content_id>(?:i4x://?[^/]+/[^/]+/[^/]+/[^@]+(?:@[^/]+)?)|(?:[^/]+))'
 
 urlpatterns = [
     path('edx_proctoring/v1/proctored_exam/exam', views.ProctoredExamView.as_view(),
@@ -52,6 +52,11 @@ urlpatterns = [
          views.StudentProctoredExamAttemptCollection.as_view(),
          name='proctored_exam.attempt.collection'
          ),
+    re_path(
+        r'edx_proctoring/v1/proctored_exam/attempt/exam/(?P<exam_id>\d+)$',
+        views.StudentProctoredExamAttemptCollection.as_view(),
+        name='proctored_exam.attempt.collection'
+    ),
     path('edx_proctoring/v1/proctored_exam/attempt/<int:attempt_id>/review_status',
          views.ProctoredExamAttemptReviewStatus.as_view(),
          name='proctored_exam.attempt.review_status'
