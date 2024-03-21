@@ -19,8 +19,7 @@ urlpatterns = [
          name='proctored_exam.exam_by_id'
          ),
     re_path(
-        (fr'edx_proctoring/v1/proctored_exam/exam/course_id/{settings.COURSE_ID_PATTERN}'
-         '/content_id/(?P<content_id>[A-z0-9]+)$'),
+        fr'edx_proctoring/v1/proctored_exam/exam/course_id/{settings.COURSE_ID_PATTERN}/content_id/{CONTENT_ID_PATTERN}$',
         views.ProctoredExamView.as_view(),
         name='proctored_exam.exam_by_content_id'
     ),
